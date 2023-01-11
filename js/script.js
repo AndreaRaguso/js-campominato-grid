@@ -12,7 +12,31 @@ const numeriGenerati = [];
 
 submit.onclick = function(){
 
-    for (let i = 0; i < 100; i++) {
+    let choose = document.getElementById("choose").value;
+    var caselle = 0;
+    var righe = 0;
+
+    if(choose == "Peaceful"){
+        caselle = 100;
+        righe = 10;
+    }
+    else if(choose == "Medium"){
+        caselle = 81;
+        righe = 9;
+    }
+
+    else if (choose == "Hard"){
+        caselle = 49;
+        righe = 7;
+    }
+
+
+    else {
+        alert("Hai inserito dati sbagliati");
+    }
+
+
+    for (let i = 0; i < caselle; i++) {
 
         const newCell = createNewCell();
         cellContainer.append(newCell);
@@ -23,12 +47,13 @@ submit.onclick = function(){
 
         const cell = document.createElement('div');
         cell.classList.add('cell');
+        cell.style.height = "calc(100% / " + righe + ")";
+        cell.style.width = "calc(100% / " + righe + ")";
+        console.log(righe);
         cell.addEventListener('click',
         
             function () {
                 
-                console.log(this);
-                console.log(this.classList);
 
                 if(this.classList.contains('clicked')){
                     this.classList.remove('clicked');
@@ -43,27 +68,16 @@ submit.onclick = function(){
         
         );
 
-        let randomNumber = getRandomNumber(1, 100);
+        let randomNumber = getRandomNumber(1, caselle);
 
         while(numeriGenerati.includes(randomNumber)){
-            randomNumber = getRandomNumber(1, 100);
+            randomNumber = getRandomNumber(1, caselle);
         }
 
         numeriGenerati.push(randomNumber);
 
-        console.log(numeriGenerati);
-
-        console.log(randomNumber);
-
-        if(randomNumber % 2 == 0){
-            cell.classList.add('even');
-        }
-        else {
-            cell.classList.add('odd');
-        }
-
         return cell;
 
     }
-    
+
 }
